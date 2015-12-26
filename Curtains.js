@@ -15,7 +15,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	var interval = undefined;
 	var state = false;
 	var moveForward = moveForward; // How much the curtain has to move.
-	var image = new Image();	// Where the image under the curtain will be saved.
+	var image = context.createImageData(width, height);	// Where the image under the curtain will be saved.
 	var context = context;
 	
 	
