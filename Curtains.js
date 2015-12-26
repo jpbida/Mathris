@@ -15,13 +15,17 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	var interval = undefined;
 	var state = false;
 	var moveForward = moveForward; // How much the curtain has to move.
-	var image = context.createImageData(width, height);	// Where the image under the curtain will be saved.
+	var image;	// Where the image under the curtain will be saved.
 	var context = context;
 	
 	
 	///////////////////////////////////////////////////////////////////////////
 	//							Closing	Curtain								 //
 	///////////////////////////////////////////////////////////////////////////
+
+	this.setImage = function(_image){
+		image = _image;
+	}
 
 	// Closes the curtain by moveForward amount.
   	var _closeHorizontally = function(){
@@ -61,7 +65,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	this.closeCurtain = function(){
 		if(!state && interval === undefined){
 			// Saving the image of what is goin to be under the fully closed curtain.
-			image = context.getImageData(x, y, width, height); 
+			//image = context.getImageData(x, y, width, height); 
 			barLength = 0;
 			if(type === 'H'){
 				closeHorizontally();

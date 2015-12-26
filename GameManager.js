@@ -52,6 +52,8 @@ $(document).ready(function(){
 							resources.xyDim.field.height, resources.colors.curtain, 1.5, 'H', 1, context);
 
 	var pause = function(){
+		curtain1.setImage(context.getImageData(resources.xyDim.PH_Bar.x, resources.xyDim.PH_Bar.y, resources.xyDim.PH_Bar.width, resources.xyDim.PH_Bar.height));
+		curtain2.setImage(context.getImageData(resources.xyDim.field.x, resources.xyDim.field.y, resources.xyDim.field.width, resources.xyDim.field.height));
 		if(!gameOver && curtain1.closeCurtain() && curtain2.closeCurtain()){
  			clearIntervals();
  			pauseFlag = true;
