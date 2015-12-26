@@ -30,7 +30,7 @@ var resources = {
 		mute : "PicsAndSounds/mute.png",
 		unmute : "PicsAndSounds/unmute.png",
 		pause : "PicsAndSounds/pause.png",
-		play : "PicsAndSounds/play",
+		play : "PicsAndSounds/play.png",
 	},
 
 	// x and y coordinates of objects and their dimentions
