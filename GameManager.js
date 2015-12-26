@@ -121,6 +121,9 @@ $(document).ready(function(){
 		hud.resetLevel();
 
 		buttons[0].setPictures(images[1]);
+		button[1].setPictures(images[2], images[3]);
+		button[2].setPictures(images[4], images[5]);
+
 
 		blocks = createBlockArray();		// Allocating array that holds every blocks
 		selectedBlocks = new Array(); 		// An array that holds selected blocks
