@@ -27,10 +27,10 @@ var resources = {
 	images : {
 		puff : "PicsAndSounds/puff.png",
 		refresh : "PicsAndSounds/refresh.png",
-		pause : "PicsAndSounds/pause.png",
 		play : "PicsAndSounds/play.png",
-		mute : "PicsAndSounds/mute.png",
+		pause : "PicsAndSounds/pause.png",
 		unmute : "PicsAndSounds/unmute.png",
+		mute : "PicsAndSounds/mute.png",
 	},
 
 	// x and y coordinates of objects and their dimentions
