@@ -21,15 +21,17 @@ var Button = function(context, x, y, width, height, selectfunc, deselectfunc){
 			return;
 		}
 		if(!this.selected){
-			this.pic = this.selectedPic;
-			if(this.sound && !this.mute) this.sound.play();
-			if(this.selectfunc())
+			if(this.selectfunc()){
+				this.pic = this.selectedPic;
+				if(this.sound && !this.mute) this.sound.play();
 				this.selected = !this.selected;
+			}
 		} else {
-			this.pic = this.deselectedPic;
-			if(this.sound && !this.mute) this.sound.play();
-			if(this.deselectfunc())
+			if(this.deselectfunc()){
+				this.pic = this.deselectedPic;
+				if(this.sound && !this.mute) this.sound.play();
 				this.selected = !this.selected;
+			}
 		}
 	};
 		
