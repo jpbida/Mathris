@@ -38,6 +38,7 @@ $(document).ready(function(){
 
 	// This function deselects all of the selected blocks
 	var deselectAll = function(){
+		if (gameOver === true) return;
 		for(var i in selectedBlocks){
 			selectedBlocks[i].select();
 		}
