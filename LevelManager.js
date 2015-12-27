@@ -12,8 +12,8 @@ var LevelManager = function(){
 	var setSignWeight = function(level){
 		this.signWeight[0] = 50 + (level-1) * 2;
 		this.signWeight[1] = 25 + (level-1) * 2;
-		this.signWeight[0] = 15 + (level-1) * 4;
-		this.signWeight[0] = 10 + (level-1) * 3;
+		this.signWeight[2] = 15 + (level-1) * 4;
+		this.signWeight[3] = 10 + (level-1) * 3;
 	};
 
 	// Sets the weight of the sign

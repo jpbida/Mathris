@@ -33,6 +33,6 @@ var Value_Sign = function(valueRange, signWeight){
 
 	// Get a random value
 	Value_Sign.prototype.getValue = function(){
-		return this.randomValue.value();
+		return 1 + this.randomValue.value();
 	};
 };
