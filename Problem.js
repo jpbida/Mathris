@@ -7,9 +7,9 @@ var Problem = function(blocks, selectedBlocks){
 	this.blocks = blocks;	// Refrence to all of the blocks
 	this.selectedBlocks = selectedBlocks; // Refrence to all of the selected blocks
 	this.problem;	// Holds the problem(question)
-	this.random = new Randomizer(4);
+	this.random = new Randomizer(3);
 	// This weight is for weighted randomness of how many blocks to add up for coming up with a problem  	
-	this.random.setWeight([70, 60, 30, 20]);
+	this.random.setWeight([90, 60, 10]);
 
 	// Changes the weight of the randomness (for making it harder for higher levels)
 	var changeWeight = function(weight){
@@ -33,10 +33,10 @@ var Problem = function(blocks, selectedBlocks){
 					sum -= value;
 					break;
 				case '*':
-					sum /= value;
+					sum *= value;
 					break;
 				case '/':
-					sum *= value;
+					sum /= value;
 					break;
 			}
 		}
@@ -45,27 +45,35 @@ var Problem = function(blocks, selectedBlocks){
 
 	// Checks to see if the selected blocks is the correct answer
 	Problem.prototype.checkAnswer = function(){
+		console.log(calculateBlocks(this.selectedBlocks));
 		return (this.problem === calculateBlocks(this.selectedBlocks));
 	};
 
 	// Creates a new problem(question)
 	Problem.prototype.createProblem = function(){
 	    var minNumBlocks;
-	    var chosenBlocks = new Array();
+	    var chosenBlocks;
 	    var randomCol;
 	    var randomRow;
 	    
 	    minNumBlocks = 2 + this.random.value();
-	    console.log("question:");
-	    // Select random number of blocks (weighted randomness for different difficulties)
-	    for(var i = 0; i < minNumBlocks; ++i){	 
-	    	randomCol = Math.round(Math.random()*(this.blocks.length-1));
-	    	randomRow = Math.round(Math.random()*(this.blocks[randomCol].length-1));
-	    	console.log("	blocks[" + randomCol + "][" + randomRow + "]");
-	    	chosenBlocks.push(this.blocks[randomCol][randomRow]); 
-		}
-		// Calculate value of chosen blocks (a new problem)
-	    this.problem = calculateBlocks(chosenBlocks);
+	
+	    do{
+	        console.log("question:");
+	    	chosenBlocks = [];
+		    // Select random number of blocks (weighted randomness for different difficulties)
+		    for(var i = 0; i < minNumBlocks; ++i){
+		    	// making sure that sign of the first block is not multiply or devide
+		    	do{	 
+		    		randomCol = Math.round(Math.random()*(this.blocks.length-1));
+		    		randomRow = Math.round(Math.random()*(this.blocks[randomCol].length-1));
+		    	}while(i === 0 && (this.blocks[randomCol][randomRow].sign === 2 || this.blocks[randomCol][randomRow].sign === 3));
+		    	console.log("	blocks[" + randomCol + "][" + randomRow + "]");
+		    	chosenBlocks.push(this.blocks[randomCol][randomRow]); 
+			}
+			// Calculate value of chosen blocks (a new problem)
+		    this.problem = calculateBlocks(chosenBlocks);
+		}while(this.problem !== Math.round(this.problem) || this.problem === 0);
 	};
 
 	// Returns the problem
@@ -90,7 +98,7 @@ var Problem = function(blocks, selectedBlocks){
 				if(sign === '/' || sign === '*')	
 					helper.push(0);
 				// If the sign is not plus put it behind the value
-				if(sign === '-')			
+				if(sign !== '+')			
 					helper.push(sign);
 				helper.push(value);
 			}

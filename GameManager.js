@@ -122,7 +122,7 @@ $(document).ready(function(){
 		if (GLInv === undefined)
 			GLInv = 15;
 		if (SPInv === undefined)
-			SPInv = 2000;
+			SPInv = 4000;
 
 		clearIntervals();
 		gameLoop = setInterval(function(){drawManager();
@@ -234,7 +234,7 @@ $(document).ready(function(){
 	// What to do if the player got the answer
 	var gotTheAnswer = function(){
 		if(sound) resources.sounds.puff.play();	 // play the puff sound
-		score = calculateScore();				 // calculate the score
+		score += calculateScore();				 // calculate the score
 		levelM.setScore(score);					 // sets the score for 
 		hud.setScore(score);			 		 // pass the score to hud
 		removeBlocksFromField();				 // Remove the selected blocks

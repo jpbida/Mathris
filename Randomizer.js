@@ -75,7 +75,7 @@ var Randomizer = function(range, coefficient){
 	this.value = function(){
 		var randNum;
 	    var weightSum = 0; 
-	    var num = range-1;
+	    var num = 0;
 	    
 	    for(var i = 0; i < range; ++i)
 	        weightSum += weights[i];
@@ -83,10 +83,10 @@ var Randomizer = function(range, coefficient){
 	    randNum = Math.round(Math.random()*weightSum);
 	   
 	    while((randNum -= weights[num]) > 0)
-	        --num;               
+	        ++num;               
 
-	    //if (!fixed)
-	    updateWeight(num);
+	    if (coefficient !== 1)
+	    	updateWeight(num);
 
 	    return num;
 	};
