@@ -205,12 +205,13 @@ $(document).ready(function(){
 		}
 	};
 
-	var deleteElements = function(){
+	var removeBlocksFromField = function(){
 
 		// delete the selected block
 		for (var i in selectedBlocks){
 			for (var j in blocks){
 				if(blocks[j].indexOf(selectedBlocks[i]) !== -1){
+					killBlock.call(selectedBlocks[i], context);
 					// Return it to the object pool to be reused
 					BM.returnToPool(selectedBlocks[i]);	
 					// Remove it from the blocks array
@@ -232,7 +233,7 @@ $(document).ready(function(){
 	var gotTheAnswer = function(){
 		if(sound) resources.sounds.puff.play();		 // play the puff sound
 		hud.addScore(calculateScore());			 // Add the score
-		deleteElements();						 // Remove the selected blocks
+		removeBlocksFromField();						 // Remove the selected blocks
 		problem.createProblem(); 				 // Creates a problem(question)
 		hud.setPH(problem.getProblem(), "");	 // Passes the problem and the helper to the HUD
 	};

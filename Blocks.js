@@ -75,11 +75,6 @@ var BlockPool = function(){
 		}
 		return retBlock;
 	};
-
-	BlockPool.prototype.add = function(obj){
-		obj.alive = false;
-		this.deadBlocks.push(obj);
-	};
 };
 
 
@@ -121,5 +116,10 @@ var drawBlock = function(context){
     }
 };
 
-	
+var killBlock = function(context){
+	context.fillStyle = resources.colors.background;
+	context.fillRect(this.x, this.y, resources.xyDim.block.width, resources.xyDim.block.height);
+	context.drawImage("PicsAndSounds/puff.png", this.x, this.y, this.width, this.height);
+	this.alive = false;
+};
 		
