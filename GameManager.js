@@ -128,7 +128,7 @@ $(document).ready(function(){
 		gameLoop = setInterval(function(){drawManager();
 										  updateManager();
 										  }, GLInv);
-		spawnInterval = setInterval(function(){var temp = BM.spawnRandBlock(levelM.getValue(), LevelManager.getSign());
+		spawnInterval = setInterval(function(){var temp = BM.spawnRandBlock(levelM.getValue(), LevelM.getSign());
 												blocks[temp.column].push(temp);
 												}, SPInv);
 	};
@@ -157,7 +157,7 @@ $(document).ready(function(){
 		
 		for(var i = 0; i < blocks.length; ++i){	// Column
 			for(var j = 0; j < resources.initialNumBlocks; ++j){ // Row
-				blocks[i].push(BM.spawnAt(i, j, levelM.getValue(), LevelManager.getSign()));
+				blocks[i].push(BM.spawnAt(i, j, levelM.getValue(), LevelM.getSign()));
 			}
 		}
 		problem.createProblem(); 				 // Creates a problem(question)
