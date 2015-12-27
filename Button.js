@@ -10,7 +10,7 @@ var Button = function(context, x, y, width, height, selectfunc, deselectfunc){
 	this.sound;
 	this.selectfunc = selectfunc;
 	this.deselectfunc = deselectfunc;
-	this.backgroundColor = resources.colors.backgroundColor;
+	this.backgroundColor = resources.colors.deselectedBlock;
 	this.context = context;
 	this.mute = false;
 
