@@ -2,23 +2,18 @@
  * This class holds the weight for the signs and range of the values
  */
  
-var Value_Sign = function(){
+var Value_Sign = function(valueRange, signWeight){
 	//this.valueWeight = [];
-	this.valueRandom = new Randomizer(6, 1);
-	//this.valueRandom.setWeight(this.valueWeight)
-	this.signWeight = [50, 25, 15, 10];
-	this.randomSign = new Randomizer(4);
-	this.randomSign.setWeight(this.signWeight);
-
-	// Sets the weight of the sign
-	Value_Sign.prototype.setLevel = function(weight){
-		this.signWeight = weight;
-	};
+	this.randomValue = new Randomizer(valueRange, 1);
+	//this.randomValue.setWeight(this.valueWeight);
+	//this.signWeight = [50, 25, 15, 10];
+	this.randomSign = new Randomizer(4, 1);
+	this.randomSign.setWeight(signWeight);
 
 	// Set randomSign weight
 	Value_Sign.prototype.setSignWeight = function(weight){
-		this.signWeight = weight;
-		this.randomSign.setWeight(this.signWeight);
+		//this.signWeight = weight;
+		this.randomSign.setWeight(weight);
 	};
 
 	// Get a random sign
@@ -28,16 +23,16 @@ var Value_Sign = function(){
 
 	// Set range of values
 	Value_Sign.prototype.setValueRange = function(range){
-		this.valueRandom.setRange(range);
+		this.randomValue.setRange(range);
 	};
 
 	// Adds to the range of the value
 	Value_Sign.prototype.addToValueRange = function(num){
-		this.valueRandom.setRange(this.valueRandom.getRange() + num);
+		this.randomValue.setRange(this.randomValue.getRange() + num);
 	};
 
 	// Get a random value
 	Value_Sign.prototype.getValue = function(){
-		return this.valueRandom.value();
+		return this.randomValue.value();
 	};
 };
