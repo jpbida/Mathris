@@ -60,6 +60,7 @@ var Randomizer = function(range, coefficient){
 	// Sets the range
 	this.setRange = function(_range){
 		range = _range;
+		initWeight();
 	};
 
 

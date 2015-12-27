@@ -14,96 +14,74 @@ $(document).ready(function(){
 	var problem;
 	var pauseFlag;
 	var gameOver;
-	var sound = true;
-	var images = [];
+	var sound;
 	var score;
+	var curtain1;
+	var curtain2;
+	var images = [];
 
 	var buttons = new Array();				// An array that hold buttons
 	var hud = new HUD(context, buttons);
 	var levelM = new LevelManager();
 
-
 	///////////////////////////////////////////////////////////////////////////
 	//							Some Needed Functions						 //
 	///////////////////////////////////////////////////////////////////////////
 
+	// This function allocates the buttons and curtains
+	var allocating = function(){
+		sound = true;
 
-	// This function allocates two dimentional array for blocks 
-	// first dimention is for columns and the second is for the rows
-	var createBlockArray = function(){
-		var arr = new Array(resources.numberOfBlocks.column);
-		for(var i = 0; i < arr.length; ++i){
-			arr[i] = new Array();
-		}
-		return arr;
-	};
-
-	// This function deselects all of the selected blocks
-	var deselectAll = function(){
-		if (gameOver === true) return;
-		for(var i in selectedBlocks){
-			selectedBlocks[i].select();
-		}
-		selectedBlocks.splice(0, selectedBlocks.length);
-		hud.setHelper("");
-	};
-
-	// This function is a draw manager and calls all draw functions
-	var drawManager = function(){
-		// Draws the background
-		context.fillStyle = resources.colors.background;
-		context.fillRect(resources.xyDim.canvas.x, resources.xyDim.canvas.y, 
-							resources.xyDim.canvas.width, resources.xyDim.canvas.height);
-		// Draws the blocks
-		for (index in blocks){
-			for (i in blocks[index])
-				drawBlock.call(blocks[index][i], context);
-		}
-		hud.draw(); // Draws the HUD and every button in the HUD
-	};
-
-	var curtain1 = new Curtain(resources.xyDim.PH_Bar.x, resources.xyDim.PH_Bar.y, resources.xyDim.PH_Bar.width, 
+		curtain1 = new Curtain(resources.xyDim.PH_Bar.x, resources.xyDim.PH_Bar.y, resources.xyDim.PH_Bar.width, 
 							resources.xyDim.PH_Bar.height, resources.colors.curtain2, 1.5, 'V', 1, context, drawManager);
-	var curtain2 = new Curtain(resources.xyDim.field.x, resources.xyDim.field.y, resources.xyDim.field.width, 
+		curtain2 = new Curtain(resources.xyDim.field.x, resources.xyDim.field.y, resources.xyDim.field.width, 
 							resources.xyDim.field.height, resources.colors.curtain, 1.5, 'H', 2, context);
 
-	var pause = function(){
-		if(!gameOver && curtain1.closeCurtain() && curtain2.closeCurtain()){
- 			clearIntervals();
- 			pauseFlag = true;
- 			return true;
- 		}
- 		return false;
+		// This button deselects every selected blocks
+		buttons.push(new Button(context, 248, 380, 20, 20, deselectAll));
+		// This button pauses and unpauses the game
+		buttons.push(new Button(context, 271, 380, 20, 20, pause, unpause));
+		// This button mute and unmutes the game
+		buttons.push(new Button(context, 294, 380, 20, 20, mute, unmute));
+		// This button creates a new game
+		buttons.push(new Button(context, 248, 410, 66, 40, initGame));
+
+		// setting images for each button
+		buttons[0].setPictures(images[1]);
+		buttons[1].setPictures(images[2], images[3]);
+		buttons[2].setPictures(images[4], images[5]);
+
+		// starts the game
+		initGame();
 	};
 
-	var unpause = function(){
-		if(curtain1.openCurtain() && curtain2.openCurtain()){
-			setTimeout(function(){setIntervals();}, 1600);
-			pauseFlag = false;
-			return true;
+	// This function initializes the game
+	var initGame = function(){
+		gameOver = false;
+		pauseFlag = false;
+		score = 0;
+		curtain1.resetState();
+		curtain2.resetState();
+		buttons[1].resetState(); // change the state of pause
+		hud.resetScore();
+		hud.resetLevel();
+
+		levelM.reset();
+		blocks = createBlockArray();		// Allocating array that holds every blocks
+		selectedBlocks = new Array(); 		// An array that holds selected blocks
+		BM = new BlockManager();
+		problem = new Problem(blocks, selectedBlocks);
+		
+		for(var i = 0; i < blocks.length; ++i){	// Column
+			for(var j = 0; j < resources.initialNumBlocks; ++j){ // Row
+				blocks[i].push(BM.spawnAt(i, j, levelM.getValue(), levelM.getSign()));
+			}
 		}
-		return false;
+		problem.createProblem(); 				 // Creates a problem(question)
+		hud.setPH(problem.getProblem(), "");	 // Passes the problem and the helper to the HUD
+
+		setIntervals();	
 	};
-
-	var mute = function(){
-		sound = false;
-		return true;
-	};
-
-	var unmute = function(){
-		sound = true;
-		return true;
-	};
-	
-
-	// This button deselects every selected blocks
-	buttons.push(new Button(context, 248, 380, 20, 20, deselectAll));
-	// This button pauses and unpauses the game
-	buttons.push(new Button(context, 271, 380, 20, 20, pause, unpause));
-	// This button mute and unmutes the game
-	buttons.push(new Button(context, 294, 380, 20, 20, mute, unmute));
-
-
 	
 	// This function clears the intervals
 	var clearIntervals = function(){
@@ -132,46 +110,72 @@ $(document).ready(function(){
 												blocks[temp.column].push(temp);
 												}, SPInv);
 	};
-
-	// This function initializes the game
-	var initGame = function(){
-		gameOver = false;
-		curtain1.resetState();
-		curtain2.resetState();
-		buttons[1].resetState(); // change the state of pause
-		pauseFlag = false;
-		score = 0;
-		hud.resetScore();
-		hud.resetLevel();
-
-		buttons[0].setPictures(images[1]);
-		buttons[1].setPictures(images[2], images[3]);
-		buttons[2].setPictures(images[4], images[5]);
-
-
-		levelM.setScore(score);
-		blocks = createBlockArray();		// Allocating array that holds every blocks
-		selectedBlocks = new Array(); 		// An array that holds selected blocks
-		BM = new BlockManager();
-		problem = new Problem(blocks, selectedBlocks);
-		
-		for(var i = 0; i < blocks.length; ++i){	// Column
-			for(var j = 0; j < resources.initialNumBlocks; ++j){ // Row
-				blocks[i].push(BM.spawnAt(i, j, levelM.getValue(), levelM.getSign()));
-			}
+	
+	// This function allocates two dimentional array for blocks 
+	// first dimention is for columns and the second is for the rows
+	var createBlockArray = function(){
+		var arr = new Array(resources.numberOfBlocks.column);
+		for(var i = 0; i < arr.length; ++i){
+			arr[i] = new Array();
 		}
-		problem.createProblem(); 				 // Creates a problem(question)
-		hud.setPH(problem.getProblem(), "");	 // Passes the problem and the helper to the HUD
-
-		setIntervals();	
+		return arr;
 	};
 
+	// This function deselects all of the selected blocks
+	var deselectAll = function(){
+		if (gameOver || pause) return;
+		for(var i in selectedBlocks){
+			selectedBlocks[i].select();
+		}
+		selectedBlocks.splice(0, selectedBlocks.length);
+		hud.setHelper("");
+	};
 
-	// This button creates a new game
-	buttons.push(new Button(context, 248, 410, 66, 40, initGame));
+	// This function is a draw manager and calls all draw functions
+	var drawManager = function(){
+		// Draws the background
+		context.fillStyle = resources.colors.background;
+		context.fillRect(resources.xyDim.canvas.x, resources.xyDim.canvas.y, 
+							resources.xyDim.canvas.width, resources.xyDim.canvas.height);
+		// Draws the blocks
+		for (index in blocks){
+			for (i in blocks[index])
+				drawBlock.call(blocks[index][i], context);
+		}
+		hud.draw(); // Draws the HUD and every button in the HUD
+	};
 
+	// this function pauses the game
+	var pause = function(){
+		if(!gameOver && curtain1.closeCurtain() && curtain2.closeCurtain()){
+ 			clearIntervals();
+ 			pauseFlag = true;
+ 			return true;
+ 		}
+ 		return false;
+	};
 
-	
+	// this function unpauses the game
+	var unpause = function(){
+		if(curtain1.openCurtain() && curtain2.openCurtain()){
+			setTimeout(function(){setIntervals();}, 1600);
+			pauseFlag = false;
+			return true;
+		}
+		return false;
+	};
+
+	// This function mutes the game
+	var mute = function(){
+		sound = false;
+		return true;
+	};
+
+	// This function unmutes the game
+	var unmute = function(){
+		sound = true;
+		return true;
+	};
 
 	//checks to see if the game is over
 	var endGame = function(){
@@ -237,6 +241,7 @@ $(document).ready(function(){
 		score += calculateScore();				 // calculate the score
 		levelM.setScore(score);					 // sets the score for 
 		hud.setScore(score);			 		 // pass the score to hud
+		hud.setLevel(levelM.getLevel());		 // update the level in hud
 		removeBlocksFromField();				 // Remove the selected blocks
 		problem.createProblem(); 				 // Creates a problem(question)
 		hud.setPH(problem.getProblem(), "");	 // Passes the problem and the helper to the HUD
@@ -298,9 +303,8 @@ $(document).ready(function(){
 	//									Main 								 //
 	///////////////////////////////////////////////////////////////////////////
 
-	//initGame(); // Initiallizes the game
-	// calls initGame after all images have finished loading
-    loadImages(resources.images, initGame); 
+	// calls allocate after all images have finished loading
+    loadImages(resources.images, allocating); 
 
 	document.addEventListener('click', handleClicks);
 

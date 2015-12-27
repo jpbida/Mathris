@@ -43,6 +43,27 @@ var Problem = function(blocks, selectedBlocks){
 		return sum;
 	};
 
+	// Checks to see if the block was already chosen (has to be called)
+	var isDuplicate = function(colRow){
+		for(var index in this.prevColRows){
+			if(this.prevColRows[index].randomCol === colRow.randomCol){
+				if(this.prevColRows[index].randomRow === colRow.randomRow)
+					return true;
+			}
+		}
+		this.prevColRows.push(colRow);
+		return false;
+	};
+
+	// Checks to see if / or * has been selected because if it is the first move 0 / 2 = 0
+	var isValidFirstChosen = function(block){
+		if(block.sign === 2)
+			return false;
+		if(block.sign === 3)
+			return false;
+		return true;
+	};
+
 	// Checks to see if the selected blocks is the correct answer
 	Problem.prototype.checkAnswer = function(){
 		console.log(calculateBlocks(this.selectedBlocks));
@@ -53,23 +74,29 @@ var Problem = function(blocks, selectedBlocks){
 	Problem.prototype.createProblem = function(){
 	    var minNumBlocks;
 	    var chosenBlocks;
-	    var randomCol;
-	    var randomRow;
+	    //var colRow = {randomCol : undefined, randomRow : undefined};
+	    var chosenColRows = new Array();
+	    //var randomCol;
+	    //var randomRow;
 	    
 	    minNumBlocks = 2 + this.random.value();
 	
 	    do{
 	        console.log("question:");
 	    	chosenBlocks = [];
+	    	chosenColRows = [];
 		    // Select random number of blocks (weighted randomness for different difficulties)
 		    for(var i = 0; i < minNumBlocks; ++i){
-		    	// making sure that sign of the first block is not multiply or devide
-		    	do{	 
-		    		randomCol = Math.round(Math.random()*(this.blocks.length-1));
-		    		randomRow = Math.round(Math.random()*(this.blocks[randomCol].length-1));
-		    	}while(i === 0 && (this.blocks[randomCol][randomRow].sign === 2 || this.blocks[randomCol][randomRow].sign === 3));
-		    	console.log("	blocks[" + randomCol + "][" + randomRow + "]");
-		    	chosenBlocks.push(this.blocks[randomCol][randomRow]); 
+		    	// making sure that sign of the first block is not multiply or devide and it has not been selected more than once
+		    	do{	
+		    		var colRow = {randomCol : undefined, randomRow : undefined};
+		    		colRow.randomCol = Math.round(Math.random()*(this.blocks.length-1));
+		    		colRow.randomRow = Math.round(Math.random()*(this.blocks[colRow.randomCol].length-1));
+
+		    	}while((i === 0 && !isValidFirstChosen(this.blocks[colRow.randomCol][colRow.randomRow])) );// || isDuplicate.call(chosenColRows, colRow));
+
+		    	console.log("	blocks[" + colRow.randomCol + "][" + colRow.randomRow + "]");
+		    	chosenBlocks.push(this.blocks[colRow.randomCol][colRow.randomRow]); 
 			}
 			// Calculate value of chosen blocks (a new problem)
 		    this.problem = calculateBlocks(chosenBlocks);

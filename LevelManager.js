@@ -9,7 +9,7 @@ var LevelManager = function(){
 	this.valueSign = new Value_Sign(6, this.signWeight);
 
 	// Set the signWeight which depends on the level
-	var setSignWeight = function(level){
+	LevelManager.prototype.setSignWeight = function(level){
 		this.signWeight[0] = 90 + (level-1) * 8;
 		this.signWeight[1] = 20 + (level-1) * 4;
 		this.signWeight[2] = 15 + (level-1) * 3;
@@ -21,14 +21,20 @@ var LevelManager = function(){
 	LevelManager.prototype.setLevel = function(level){
 		// setting the range of the random values
 		this.valueSign.setValueRange(6 + (level - 1) * 3);
-		setSignWeight(level);
+		this.setSignWeight(level);
 		this.level = level;
 	};
 
+
+	// Gets the value of Level
+	LevelManager.prototype.getLevel = function(){
+		return this.level;
+	};
+
 	LevelManager.prototype.setScore = function(score){
-		var level = 1 + Math.floor(score / 50);
+		var level = 1 + Math.floor(score / 5);
 		if(this.level < level)
-			LevelManager.prototype.setLevel(level);
+			this.setLevel(level);
 	};
 
 	// Get a random value
@@ -39,5 +45,10 @@ var LevelManager = function(){
 	// Get a random sign
 	LevelManager.prototype.getSign = function(){
 		return this.valueSign.getSign();
+	};
+
+	// Reset everything
+	LevelManager.prototype.reset = function(){
+		this.setLevel(1);
 	};
 };

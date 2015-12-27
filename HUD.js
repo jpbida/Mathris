@@ -37,11 +37,11 @@ var HUD = function(context, buttons){
 	    // Write level, score, highscore
 	    context.fillStyle = resources.colors.text;
 	    context.fillText("Level", 263, 90);
-	    context.fillText(""+this.level, 279, 115);
+	    context.fillText(""+this.level, 277, 115);
 	    context.fillText("Score", 262, 142);
-	    context.fillText(""+this.score, 279, 167);
+	    context.fillText(""+this.score, 275, 167);
 	    context.fillText("Highscore", 247, 202);
-	    context.fillText(""+this.highscore, 279, 227);
+	    context.fillText(""+this.highscore, 275, 227);
 	    // Draw buttons
 		for(var index in this.buttons){
 			this.buttons[index].draw();
