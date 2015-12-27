@@ -7,7 +7,14 @@ var Problem = function(blocks, selectedBlocks){
 	this.blocks = blocks;	// Refrence to all of the blocks
 	this.selectedBlocks = selectedBlocks; // Refrence to all of the selected blocks
 	this.problem;	// Holds the problem(question)
-	//this.random = new Randomizer(4);
+	this.random = new Randomizer(4);
+	// This weight is for weighted randomness of how many blocks to add up for coming up with a problem  	
+	this.random.setWeight([70, 60, 30, 20]);
+
+	// Changes the weight of the randomness (for making it harder for higher levels)
+	var changeWeight = function(weight){
+		this.random.setWeight(weight);
+	};
 
 	// Calculates the value of the passed in blocks considering their signs
 	var calculateBlocks = function(chosenBlocks){
@@ -48,13 +55,13 @@ var Problem = function(blocks, selectedBlocks){
 	    var randomCol;
 	    var randomRow;
 	    
-	    minNumBlocks = 2 ;//+ myRandom(questionWeight);
-	    //console.log("question:");
+	    minNumBlocks = 2 + this.random.value();
+	    console.log("question:");
 	    // Select random number of blocks (weighted randomness for different difficulties)
 	    for(var i = 0; i < minNumBlocks; ++i){	 
 	    	randomCol = Math.round(Math.random()*(this.blocks.length-1));
 	    	randomRow = Math.round(Math.random()*(this.blocks[randomCol].length-1));
-	    	//console.log("	blocks[" + randomCol + "][" + randomRow + "]");
+	    	console.log("	blocks[" + randomCol + "][" + randomRow + "]");
 	    	chosenBlocks.push(this.blocks[randomCol][randomRow]); 
 		}
 		// Calculate value of chosen blocks (a new problem)

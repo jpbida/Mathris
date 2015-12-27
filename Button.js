@@ -1,3 +1,8 @@
+/*
+ * This class is for making a button. each button dose 
+ * task by passing it a one or two functions.
+ */
+
 var Button = function(context, x, y, width, height, selectfunc, deselectfunc){
 	this.x = x;
 	this.y = y;

@@ -2,17 +2,17 @@
  * This class is a weighted randomizer class.
  */
 
-var Randomizer = function(range, coefficient, fixed){
+var Randomizer = function(range, coefficient){
 	var range = range;
 	var coefficient = coefficient;
-	var fixed = fixed;
+	//var fixed = fixed;
 	var weights; 
 
 	// initialize coesfficient and fixed if no value was passed while allocating
 	if (coefficient === undefined)
-		coefficient = 2;
-	if (fixed === undefined)
-		fixed = false;
+		coefficient = 1;
+	/*if (fixed === undefined)
+		fixed = false;*/
 
 	///////////////////////////////////////////////////////////////////////////
 	//						     	 Utilities								 //
@@ -25,8 +25,8 @@ var Randomizer = function(range, coefficient, fixed){
 	        weights[i] = 1;
 	};
 
-	if(!fixed)
-		initWeight();
+	//if(!fixed)
+	initWeight();
 	
 	// Updates the weight of random numbers
 	var updateWeight = function(lastRandNum){
@@ -38,12 +38,13 @@ var Randomizer = function(range, coefficient, fixed){
 	};
 	
 	// Changes the weight of the randomizer
-	this.setWeight = function(_weights, _fixed){
+	this.setWeight = function(_weights){
+		coefficient = 1;
 		if(_weights.length === range){
 			weights = _weights;
-			fixed = _fixed;
+			/*fixed = _fixed;
 			if (fixed === undefined)
-				fixed = true;
+				fixed = true;*/
 		}
 		else {
 			console.log("Wrong number of weights!");
@@ -53,6 +54,17 @@ var Randomizer = function(range, coefficient, fixed){
 	// Changes the coefficient of the randomizer
 	this.setCoefficient = function(_coefficient){
 		coefficient = _coefficient;
+	};
+
+
+	// Sets the range
+	this.setRange = function(_range){
+		range = _range;
+	};
+
+
+	this.getRange = function(){
+		return range;
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -73,8 +85,8 @@ var Randomizer = function(range, coefficient, fixed){
 	    while((randNum -= weights[num]) > 0)
 	        --num;               
 
-	    if (!fixed)
-	    	updateWeight(num);
+	    //if (!fixed)
+	    updateWeight(num);
 
 	    return num;
 	};

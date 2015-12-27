@@ -81,6 +81,11 @@ var HUD = function(context, buttons){
 		++this.level;
 	};
 
+	// Sets the level
+	HUD.prototype.setLevel = function(level){
+		this.level = level;
+	};
+
 	// Adds to the score
 	HUD.prototype.addScore = function(score){
 		this.score += score;
