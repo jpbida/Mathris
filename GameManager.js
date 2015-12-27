@@ -234,6 +234,7 @@ $(document).ready(function(){
 	    var mouseX = e.clientX - rect.left;
 	    var mouseY = e.clientY - rect.top;
 
+	    if(blocks === undefined) return;
 	    // Check to see what buttons were clicked
 		var mouseInHUD = hud.pointInButton(mouseX, mouseY); 
 		// if buttons were clicked return

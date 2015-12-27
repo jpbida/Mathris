@@ -53,6 +53,8 @@ var HUD = function(context, buttons){
 		for(var index in this.buttons){
 			if (pointInBlock.call(this.buttons[index], mouseX, mouseY)){
 				this.buttons[index].select();
+				//draw the pressed button after it was pressed to show its changed image
+				this.buttons[index].draw();
 				return true;
 			}		
 		}

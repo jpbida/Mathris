@@ -63,6 +63,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 		if(!state && interval === undefined){
 			// Saving the image of what is goin to be under the fully closed curtain.
 			//image = context.getImageData(x, y, width, height); 
+			// Since the getImageData throws insecure have to draw every block before drawing the curtain
 			barLength = 0;
 			if(type === 'H'){
 				closeHorizontally();
@@ -83,6 +84,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	var _openHorizontally = function(){
 		// Drawing what was under the curtain before it closed.
 		//context.putImageData(image, x, y); 
+		// Since the getImageData throws insecure have to draw every block before drawing the curtain
 		if(drawFuncBackground !== undefined) drawFuncBackground(); 
 		context.fillStyle = color;
 		context.fillRect(x, y, barLength -= moveForward, height);
@@ -103,6 +105,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	var _openVertically = function (){
 		// Drawing what was under the curtain before it closed.
 		//context.putImageData(image, x, y);	
+		// Since the getImageData throws insecure have to draw every block before drawing the curtain
 		if(drawFuncBackground !== undefined) drawFuncBackground(); 
 		context.fillStyle = color;
 		context.fillRect(x, y, width, barLength -= moveForward);
