@@ -16,9 +16,11 @@ $(document).ready(function(){
 	var gameOver;
 	var sound = true;
 	var images = [];
+	var score;
 
 	var buttons = new Array();				// An array that hold buttons
 	var hud = new HUD(context, buttons);
+	var levelM = new LevelManager();
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -120,13 +122,13 @@ $(document).ready(function(){
 		if (GLInv === undefined)
 			GLInv = 15;
 		if (SPInv === undefined)
-			SPInv = 1000;
+			SPInv = 2000;
 
 		clearIntervals();
 		gameLoop = setInterval(function(){drawManager();
 										  updateManager();
 										  }, GLInv);
-		spawnInterval = setInterval(function(){var temp = BM.spawnRandBlock(4, 1);
+		spawnInterval = setInterval(function(){var temp = BM.spawnRandBlock(levelM.getValue(), LevelManager.getSign());
 												blocks[temp.column].push(temp);
 												}, SPInv);
 	};
@@ -138,6 +140,7 @@ $(document).ready(function(){
 		curtain2.resetState();
 		buttons[1].resetState(); // change the state of pause
 		pauseFlag = false;
+		score = 0;
 		hud.resetScore();
 		hud.resetLevel();
 
@@ -146,6 +149,7 @@ $(document).ready(function(){
 		buttons[2].setPictures(images[4], images[5]);
 
 
+		levelM.setScore(score);
 		blocks = createBlockArray();		// Allocating array that holds every blocks
 		selectedBlocks = new Array(); 		// An array that holds selected blocks
 		BM = new BlockManager();
@@ -153,7 +157,7 @@ $(document).ready(function(){
 		
 		for(var i = 0; i < blocks.length; ++i){	// Column
 			for(var j = 0; j < resources.initialNumBlocks; ++j){ // Row
-				blocks[i].push(BM.spawnAt(i, j, j, 0));
+				blocks[i].push(BM.spawnAt(i, j, levelM.getValue(), LevelManager.getSign()));
 			}
 		}
 		problem.createProblem(); 				 // Creates a problem(question)
@@ -230,7 +234,9 @@ $(document).ready(function(){
 	// What to do if the player got the answer
 	var gotTheAnswer = function(){
 		if(sound) resources.sounds.puff.play();	 // play the puff sound
-		hud.addScore(calculateScore());			 // Add the score
+		score = calculateScore();				 // calculate the score
+		levelM.setScore(score);					 // sets the score for 
+		hud.setScore(score);			 		 // pass the score to hud
 		removeBlocksFromField();				 // Remove the selected blocks
 		problem.createProblem(); 				 // Creates a problem(question)
 		hud.setPH(problem.getProblem(), "");	 // Passes the problem and the helper to the HUD

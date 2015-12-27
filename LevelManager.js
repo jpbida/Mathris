@@ -17,11 +17,27 @@ var LevelManager = function(){
 	};
 
 	// Sets the weight of the sign
-	Value_Sign.prototype.setLevel = function(level){
+	LevelManager.prototype.setLevel = function(level){
 		// setting the range of the random values
 		this.valueSign.setValueRange(6 + (level - 1) * 3);
 		setSignWeight(level);
 		this.valueSign.setSignWeight(this.signWeight);
 		this.level = level;
+	};
+
+	LevelManager.prototype.setScore = function(score){
+		var level = 1 + (score / 50);
+		if(this.level < level)
+			LevelManager.prototype.setLevel(level);
+	};
+
+	// Get a random value
+	LevelManager.prototype.getValue = function(){
+		return this.valueSign.getValue();
+	};
+
+	// Get a random sign
+	LevelManager.prototype.getSign = function(){
+		return this.valueSign.getSign();
 	};
 };

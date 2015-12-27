@@ -87,8 +87,8 @@ var HUD = function(context, buttons){
 	};
 
 	// Adds to the score
-	HUD.prototype.addScore = function(score){
-		this.score += score;
+	HUD.prototype.setScore = function(score){
+		this.score = score;
 		if(this.score > this.highscore)
 			this.highscore = this.score;
 	};
