@@ -21,7 +21,7 @@ var resources = {
 	},
 
 	sounds : {
-		puff : new Audio("puff.mp3"),
+		puff : new Audio("PicsAndSounds/puff.mp3"),
 	},
 
 	images : {
