@@ -66,8 +66,6 @@ $(document).ready(function(){
 							resources.xyDim.field.height, resources.colors.curtain, 1.5, 'H', 2, context);
 
 	var pause = function(){
-		//curtain1.setImage(context.getImageData(resources.xyDim.PH_Bar.x, resources.xyDim.PH_Bar.y, resources.xyDim.PH_Bar.width, resources.xyDim.PH_Bar.height));
-		//curtain2.setImage(context.getImageData(resources.xyDim.field.x, resources.xyDim.field.y, resources.xyDim.field.width, resources.xyDim.field.height));
 		if(!gameOver && curtain1.closeCurtain() && curtain2.closeCurtain()){
  			clearIntervals();
  			pauseFlag = true;
@@ -211,7 +209,7 @@ $(document).ready(function(){
 		for (var i in selectedBlocks){
 			for (var j in blocks){
 				if(blocks[j].indexOf(selectedBlocks[i]) !== -1){
-					killBlock.call(selectedBlocks[i], context);
+					killBlock.call(selectedBlocks[i], context, images[0]);
 					// Return it to the object pool to be reused
 					BM.returnToPool(selectedBlocks[i]);	
 					// Remove it from the blocks array
@@ -231,9 +229,9 @@ $(document).ready(function(){
 
 	// What to do if the player got the answer
 	var gotTheAnswer = function(){
-		if(sound) resources.sounds.puff.play();		 // play the puff sound
+		if(sound) resources.sounds.puff.play();	 // play the puff sound
 		hud.addScore(calculateScore());			 // Add the score
-		removeBlocksFromField();						 // Remove the selected blocks
+		removeBlocksFromField();				 // Remove the selected blocks
 		problem.createProblem(); 				 // Creates a problem(question)
 		hud.setPH(problem.getProblem(), "");	 // Passes the problem and the helper to the HUD
 	};
