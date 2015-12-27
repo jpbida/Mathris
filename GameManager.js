@@ -46,10 +46,24 @@ $(document).ready(function(){
 		hud.setHelper("");
 	};
 
+	// This function is a draw manager and calls all draw functions
+	var drawManager = function(){
+		// Draws the background
+		context.fillStyle = resources.colors.background;
+		context.fillRect(resources.xyDim.canvas.x, resources.xyDim.canvas.y, 
+							resources.xyDim.canvas.width, resources.xyDim.canvas.height);
+		// Draws the blocks
+		for (index in blocks){
+			for (i in blocks[index])
+				drawBlock.call(blocks[index][i], context);
+		}
+		hud.draw(); // Draws the HUD and every button in the HUD
+	};
+
 	var curtain1 = new Curtain(resources.xyDim.PH_Bar.x, resources.xyDim.PH_Bar.y, resources.xyDim.PH_Bar.width, 
-							resources.xyDim.PH_Bar.height, resources.colors.curtain2, 1.5, 'V', 1, context);
+							resources.xyDim.PH_Bar.height, resources.colors.curtain2, 1.5, 'V', 1, context, drawManager);
 	var curtain2 = new Curtain(resources.xyDim.field.x, resources.xyDim.field.y, resources.xyDim.field.width, 
-							resources.xyDim.field.height, resources.colors.curtain, 1.5, 'H', 1, context);
+							resources.xyDim.field.height, resources.colors.curtain, 1.5, 'H', 2, context);
 
 	var pause = function(){
 		//curtain1.setImage(context.getImageData(resources.xyDim.PH_Bar.x, resources.xyDim.PH_Bar.y, resources.xyDim.PH_Bar.width, resources.xyDim.PH_Bar.height));
@@ -146,19 +160,7 @@ $(document).ready(function(){
 	buttons.push(new Button(context, 248, 410, 66, 40, initGame));
 
 
-	// This function is a draw manager and calls all draw functions
-	var drawManager = function(){
-		// Draws the background
-		context.fillStyle = resources.colors.background;
-		context.fillRect(resources.xyDim.canvas.x, resources.xyDim.canvas.y, 
-							resources.xyDim.canvas.width, resources.xyDim.canvas.height);
-		// Draws the blocks
-		for (index in blocks){
-			for (i in blocks[index])
-				drawBlock.call(blocks[index][i], context);
-		}
-		hud.draw(); // Draws the HUD and every button in the HUD
-	};
+	
 
 	//checks to see if the game is over
 	var endGame = function(){

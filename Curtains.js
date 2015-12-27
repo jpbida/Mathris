@@ -3,7 +3,7 @@
  * it can be opened and closed vertically and horizontally.
  */
 
-var Curtain = function(x, y, width, height, color, time, type, moveForward, context){
+var Curtain = function(x, y, width, height, color, time, type, moveForward, context, drawFunc){
 	var x = x;
 	var y = y;
 	var height = height;
@@ -17,6 +17,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	var moveForward = moveForward; // How much the curtain has to move.
 	var image;	// Where the image under the curtain will be saved.
 	var context = context;
+	var drawFuncBackground = drawFunc;
 	
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -61,7 +62,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	this.closeCurtain = function(){
 		if(!state && interval === undefined){
 			// Saving the image of what is goin to be under the fully closed curtain.
-			image = context.getImageData(x, y, width, height); 
+			//image = context.getImageData(x, y, width, height); 
 			barLength = 0;
 			if(type === 'H'){
 				closeHorizontally();
@@ -81,7 +82,8 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	// Opens the curtain by moveForward amount.
 	var _openHorizontally = function(){
 		// Drawing what was under the curtain before it closed.
-		context.putImageData(image, x, y);  
+		//context.putImageData(image, x, y); 
+		if(drawFuncBackground !== undefined) drawFuncBackground(); 
 		context.fillStyle = color;
 		context.fillRect(x, y, barLength -= moveForward, height);
 		context.fillRect(x+width, y, -barLength, height);
@@ -100,7 +102,8 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 	// Opens the curtain by moveForward amount.
 	var _openVertically = function (){
 		// Drawing what was under the curtain before it closed.
-		context.putImageData(image, x, y);	
+		//context.putImageData(image, x, y);	
+		if(drawFuncBackground !== undefined) drawFuncBackground(); 
 		context.fillStyle = color;
 		context.fillRect(x, y, width, barLength -= moveForward);
 		context.fillRect(x, y+height, width, -barLength);
