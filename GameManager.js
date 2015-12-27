@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 
 	///////////////////////////////////////////////////////////////////////////
-	//								Initiallizing							 //
+	//								Variables								 //
 	///////////////////////////////////////////////////////////////////////////
 	var gameLoop;
 	var spawnInterval;
@@ -57,16 +57,7 @@ $(document).ready(function(){
 
 	// This function initializes the game
 	var initGame = function(){
-		gameOver = false;
-		pauseFlag = false;
-		score = 0;
-		curtain1.resetState();
-		curtain2.resetState();
-		buttons[1].resetState(); // change the state of pause
-		hud.resetScore();
-		hud.resetLevel();
-
-		levelM.reset();
+		reset();
 		blocks = createBlockArray();		// Allocating array that holds every blocks
 		selectedBlocks = new Array(); 		// An array that holds selected blocks
 		BM = new BlockManager();
@@ -83,6 +74,19 @@ $(document).ready(function(){
 		setIntervals();	
 	};
 	
+	// This function reset every variable
+	var reset = function(){
+		gameOver = false;
+		pauseFlag = false;
+		score = 0;
+		curtain1.resetState();
+		curtain2.resetState();
+		buttons[1].resetState(); // change the state of pause
+		hud.resetScore();
+		hud.resetLevel();
+		levelM.reset();
+	};
+
 	// This function clears the intervals
 	var clearIntervals = function(){
 		// Loop that updates everything
@@ -110,7 +114,7 @@ $(document).ready(function(){
 												blocks[temp.column].push(temp);
 												}, SPInv);
 	};
-	
+
 	// This function allocates two dimentional array for blocks 
 	// first dimention is for columns and the second is for the rows
 	var createBlockArray = function(){
