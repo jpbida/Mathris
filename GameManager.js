@@ -114,7 +114,16 @@ $(document).ready(function(){
 	};
 
 	// This function manages the intervals (gameLoop and spawnInterval)
-	var setIntervals = function(GLInv = 15, SPInv = 1000){
+	var setIntervals = function(GLInv, SPInv){
+		var GLInv = GLInv;
+		var SPInv = SPInv;
+
+		//initializes if no argument was passed in
+		if (GLInv === undefined)
+			GLInv = 15;
+		if (SPInv === undefined)
+			SPInv = 1000;
+
 		clearIntervals();
 		gameLoop = setInterval(function(){drawManager();
 										  updateManager();

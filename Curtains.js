@@ -34,12 +34,12 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 			clearInterval(interval);
 			interval = undefined;
 		}
-	}
+	};
 
 	// Update function for closing the curtain Horizontally.
 	var closeHorizontally = function (){
 		interval = setInterval(_closeHorizontally, calculateInterval());
-	}
+	};
 
 	// Closes the curtain by moveForward amount.
 	var _closeVertically = function (){
@@ -51,12 +51,12 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 			clearInterval(interval);
 			interval = undefined;
 		}
-	}
+	};
 
 	// Update function for closing the curtain Horizontally.
 	var closeVertically = function (){
 		interval = setInterval(_closeVertically, calculateInterval());
-	}
+	};
 
 	// Closing Curtain manager.
 	this.closeCurtain = function(){
@@ -73,7 +73,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 			return true;
 		}
 		return false;
-	}
+	};
 
 
 	///////////////////////////////////////////////////////////////////////////
@@ -94,12 +94,12 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 			interval = undefined;
 			state = false;
 		}
-	}
+	};
 
 	// Update function for opening the curtain Horizontally.
 	var openHorizontally = function (){
 		interval = setInterval(_openHorizontally, calculateInterval());
-	}
+	};
 
 	// Opens the curtain by moveForward amount.
 	var _openVertically = function (){
@@ -115,12 +115,12 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 			interval = undefined;
 			state = false;
 		}
-	}
+	};
 
 	// Update function for opening the curtain vertically.
 	var openVertically = function (){
 		interval = setInterval(_openVertically, calculateInterval());
-	}
+	};
 
 	// Openning Curtain manager.
   	this.openCurtain = function (){
@@ -135,7 +135,7 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 			return true;
 		}
 		return false;
-	}
+	};
 
 	///////////////////////////////////////////////////////////////////////////
 	//						     	 Utilities								 //
@@ -148,17 +148,17 @@ var Curtain = function(x, y, width, height, color, time, type, moveForward, cont
 		} else if(type === 'V'){
 			return Math.ceil((time * 1000) / ((height / 2) / moveForward));
 		}	
-	}
+	};
 
 	// returns the state of theis curtain(open or close)
 	this.getState = function(){
 		return state;
-	}
+	};
 
 	// resets the state of the curtain
 	this.resetState = function(){
 		state = false;
 		clearInterval(interval);
 		interval = undefined;
-	}
+	};
 };

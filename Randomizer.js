@@ -2,11 +2,17 @@
  * This class is a weighted randomizer class.
  */
 
-var Randomizer = function(range, coefficient = 2, fixed = false){
+var Randomizer = function(range, coefficient, fixed){
 	var range = range;
 	var coefficient = coefficient;
 	var fixed = fixed;
 	var weights; 
+
+	// initialize coesfficient and fixed if no value was passed while allocating
+	if (coefficient === undefined)
+		coefficient = 2;
+	if (fixed === undefined)
+		fixed = false;
 
 	///////////////////////////////////////////////////////////////////////////
 	//						     	 Utilities								 //
@@ -32,10 +38,12 @@ var Randomizer = function(range, coefficient = 2, fixed = false){
 	};
 	
 	// Changes the weight of the randomizer
-	this.setWeight = function(_weights, _fixed = true){
+	this.setWeight = function(_weights, _fixed){
 		if(_weights.length === range){
 			weights = _weights;
 			fixed = _fixed;
+			if (fixed === undefined)
+				fixed = true;
 		}
 		else {
 			console.log("Wrong number of weights!");
