@@ -163,8 +163,7 @@ $(document).ready(function(){
 	// this function unpauses the game
 	var unpause = function(){
 		if(curtain1.openCurtain() && curtain2.openCurtain()){
-			setTimeout(function(){setIntervals();}, 1600);
-			pauseFlag = false;
+			setTimeout(function(){setIntervals(); pauseFlag = false;}, 1600);
 			return true;
 		}
 		return false;
