@@ -127,7 +127,7 @@ $(document).ready(function(){
 
 	// This function deselects all of the selected blocks
 	var deselectAll = function(){
-		if (gameOver || pause) return;
+		if (gameOver || pauseFlag) return;
 		for(var i in selectedBlocks){
 			selectedBlocks[i].select();
 		}
