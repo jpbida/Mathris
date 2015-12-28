@@ -127,12 +127,13 @@ $(document).ready(function(){
 
 	// This function deselects all of the selected blocks
 	var deselectAll = function(){
-		if (gameOver || pauseFlag) return;
+		if (gameOver || pauseFlag) return false;
 		for(var i in selectedBlocks){
 			selectedBlocks[i].select();
 		}
 		selectedBlocks.splice(0, selectedBlocks.length);
 		hud.setHelper("");
+		return true;
 	};
 
 	// This function is a draw manager and calls all draw functions
