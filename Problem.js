@@ -74,7 +74,7 @@ var Problem = function(blocks, selectedBlocks){
 	Problem.prototype.createProblem = function(){
 	    var minNumBlocks;
 	    var chosenBlocks;
-	    //var colRow = {randomCol : undefined, randomRow : undefined};
+	    var colRow = {randomCol : undefined, randomRow : undefined};
 	    var chosenColRows = new Array();
 	    //var randomCol;
 	    //var randomRow;
@@ -82,20 +82,20 @@ var Problem = function(blocks, selectedBlocks){
 	    minNumBlocks = 2 + this.random.value();
 	
 	    do{
-	        console.log("question:");
+	        //console.log("question:");
 	    	chosenBlocks = [];
-	    	chosenColRows = [];
+	    	//chosenColRows = [];
 		    // Select random number of blocks (weighted randomness for different difficulties)
 		    for(var i = 0; i < minNumBlocks; ++i){
 		    	// making sure that sign of the first block is not multiply or devide and it has not been selected more than once
 		    	do{	
-		    		var colRow = {randomCol : undefined, randomRow : undefined};
+		    		//var colRow = {randomCol : undefined, randomRow : undefined};
 		    		colRow.randomCol = Math.round(Math.random()*(this.blocks.length-1));
 		    		colRow.randomRow = Math.round(Math.random()*(this.blocks[colRow.randomCol].length-1));
 
 		    	}while((i === 0 && !isValidFirstChosen(this.blocks[colRow.randomCol][colRow.randomRow])) );// || isDuplicate.call(chosenColRows, colRow));
 
-		    	console.log("	blocks[" + colRow.randomCol + "][" + colRow.randomRow + "]");
+		    	//console.log("	blocks[" + colRow.randomCol + "][" + colRow.randomRow + "]");
 		    	chosenBlocks.push(this.blocks[colRow.randomCol][colRow.randomRow]); 
 			}
 			// Calculate value of chosen blocks (a new problem)
