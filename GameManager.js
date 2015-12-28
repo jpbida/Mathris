@@ -286,15 +286,17 @@ $(document).ready(function(){
 	};
 
 
-	var loadImages = function(sources, startGame) {
+	// Loads the images that and stops the game from starting untill all of the images are loaded
+	// startGame is the function that this function calls when all images load
+	var loadImages = function(imgs, startGame) {
 		var loadedImages = 0;
 		var numImages = 0;
-		for (var i in sources) {
+		for (var i in imgs) {
 			numImages++;
 		}
-		for (var i in sources) {
+		for (var i in imgs) {
 			images.push(new Image());
-			images[images.length-1].src = sources[i];
+			images[images.length-1].src = imgs[i];
 			images[images.length-1].onload = function(){
 				if (++loadedImages === numImages) {
 					startGame();
