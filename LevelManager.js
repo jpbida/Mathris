@@ -31,8 +31,10 @@ var LevelManager = function(){
 		return this.level;
 	};
 
+	// Sets the score and changes the level accordingly
 	LevelManager.prototype.setScore = function(score){
-		var level = 1 + Math.floor(score / 5);
+		// level goes up after every 50 scores
+		var level = 1 + Math.floor(score / 50);
 		if(this.level < level)
 			this.setLevel(level);
 	};
