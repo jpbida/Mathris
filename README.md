@@ -2,4 +2,4 @@
 This is a math game in javascript
 
 
-Link to play the game: https://rawgit.com/PouryaSohbati/Mathris/master/index.html
+Link to play the game: https://cdn.rawgit.com/PouryaSohbati/Mathris/master/index.html
