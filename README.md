@@ -7,7 +7,7 @@ Link to play the game: https://cdn.rawgit.com/PouryaSohbati/Mathris/master/index
 ScreenShot
 ----------
 
-![ScreenShot1](screenshot1.png)
+![ScreenShot1](screenshot1.PNG)
 ![ScreenShot2](screenshot2.png)
 ![ScreenShot3](screenshot3.png)
 ![ScreenShot4](screenshot4.png)
