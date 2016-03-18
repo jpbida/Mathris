@@ -50,6 +50,7 @@ $(document).ready(function(){
 		buttons[0].setPictures(images[1]);
 		buttons[1].setPictures(images[2], images[3]);
 		buttons[2].setPictures(images[4], images[5]);
+		buttons[3].setPictures(images[6]);
 
 		// starts the game
 		initGame();

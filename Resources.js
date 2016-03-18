@@ -10,9 +10,11 @@ var resources = {
 		background : "#D2C7BB",
 		HUD : "#A89F96",
 		deselectedBlock : "#F0E8DF",
+		button : "#F0E8DF",
 		writing : "#827970",
 		curtain : "#F4BA84",
 		curtain2 : "#D2C7BB",
+		sidebar : "827970", 
 	},
 
 	fonts : {
@@ -31,6 +33,7 @@ var resources = {
 		pause : "PicsAndSounds/pause.png",
 		unmute : "PicsAndSounds/unmute.png",
 		mute : "PicsAndSounds/mute.png",
+		newGame : "PicsAndSounds/newGame.png"
 	},
 
 	// x and y coordinates of objects and their dimentions
